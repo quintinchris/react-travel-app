@@ -2,11 +2,24 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const mongoose = require('mongoose');
+
+require('dotenv').config();
+
+const middlewares = require('./middlewares');
+const routes = require('./routes/catalog');
 
 const app = express();
+
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 app.use(morgan('common'));
 app.use(helmet());
 app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.json({
@@ -14,20 +27,10 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use((req, res, next) => {
-  const error = new Error('Not found - ${req.originalUrl}');
-  res.statusCode(404);
-  next(error);
-});
+app.use('/api/logs', routes);
 
-app.use((error, req, res, next) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  res.status(statusCode);
-  res.json({
-    message: error.message,
-    stack: process.env.NODE_ENV === 'production' ? 'Hidden' : error.stack,
-  });
-});
+app.use(middlewares.notFound);
+app.use(middlewares.errorHandler);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
