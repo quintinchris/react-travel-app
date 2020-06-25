@@ -12,6 +12,10 @@
     color: white;
   }
 
+  .marker-new {
+    color: orange;
+  }
+
   .popup {
     max-width: 300px;
   }
