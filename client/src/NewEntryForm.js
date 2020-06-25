@@ -12,13 +12,13 @@ const NewEntryForm = ({ location, onClose }) => {
             setLoading(true);
             data.latitude = location.latitude;
             data.longitude = location.longitude;
-            const newEntry = await createEntry(data);
+            await createEntry(data);
             onClose();
         } catch (error) {
             console.log(error)
             setError(error.message);
+            setLoading(false);
         }
-        setLoading(false);
     }
 
     return (

@@ -21,11 +21,19 @@
   }
 
   .popup {
-    width: 40vw;
-    height: 37vw;
+    width: auto;
+    height: auto;
     padding: 1rem;
     background-color: #121212;
     color: white;
+  }
+
+  .popup img {
+    width: auto;
+    height: 200px;
+    padding-top: 2rem;
+    margin-left: 0;
+    display: block;
   }
 
   .mapboxgl-popup-content {
@@ -40,6 +48,12 @@
   #formTitle {
     padding: 0;
     margin: 0;
+  }
+
+  .popup .entryForm {
+    width: 40vw;
+    height: 37vw;
+    padding: 1rem;
   }
 
   .entryForm label,

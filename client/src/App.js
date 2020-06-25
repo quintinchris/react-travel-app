@@ -16,11 +16,13 @@ const App = () => {
     zoom: 4
   });
 
+  const refresh = async () => {
+    const logEntries = await listEntries();
+    setLogEntries(logEntries);
+  };
+
   useEffect(() => {
-    (async () => {
-      const logEntries = await listEntries();
-      setLogEntries(logEntries);
-    })();
+    refresh();
   }, []);
 
   const showAddMarkerPopup = (event) => {
@@ -90,6 +92,7 @@ const App = () => {
                     <h3>{entry.title}</h3>
                     <p>{entry.comments}</p>
                     <small>Visited on: {new Date(entry.visitDate).toLocaleDateString()}</small>
+                    {entry.image &&<img src={entry.image} alt={entry.title} /> }
                   </div>
                 </Popup>
               ) : null
@@ -136,7 +139,7 @@ const App = () => {
               <div className='popup'>
                 <NewEntryForm onClose={() => {
                   setAddEntryLocation(null);
-                  
+                  refresh();
                 }} location={addEntryLocation} />
               </div>
             </Popup>
