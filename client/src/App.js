@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import { listEntries } from './API';
+import NewEntryForm from './NewEntryForm';
 
 const App = () => {
   const [logEntries, setLogEntries] = useState([]);
@@ -133,7 +134,10 @@ const App = () => {
               onClose={() => setAddEntryLocation(null)}
               anchor="top" >
               <div className='popup'>
-                <h3>Add new entry:</h3>
+                <NewEntryForm onClose={() => {
+                  setAddEntryLocation(null);
+                  
+                }} location={addEntryLocation} />
               </div>
             </Popup>
           </>
