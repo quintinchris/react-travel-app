@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8080';
+const URL = 'https://trvl-log.web.app';
 
 export async function listEntries() {
     const response = await fetch(`${URL}/api/logs`);
